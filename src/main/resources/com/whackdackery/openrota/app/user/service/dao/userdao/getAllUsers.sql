@@ -1,0 +1,1 @@
+SELECT id u_id, username u_username, email u_email FROM users u;

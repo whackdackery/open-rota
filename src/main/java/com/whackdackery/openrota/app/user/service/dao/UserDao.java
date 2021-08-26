@@ -22,6 +22,6 @@ public interface UserDao {
 
     @SqlQuery
     @UseRowReducer(UserRoleMapper.class)
-    Optional<UserWithRoles> getUserWithRoles(Long userId);
+    Optional<UserWithRoles> getUserWithRoles(int userId);
 
 }

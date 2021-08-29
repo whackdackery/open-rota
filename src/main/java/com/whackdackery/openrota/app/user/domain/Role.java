@@ -1,36 +1,18 @@
 package com.whackdackery.openrota.app.user.domain;
 
+import com.whackdackery.openrota.app.user.domain.AvailableRoles;
+import lombok.Data;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+@Data
+public class Role {
+    int id;
+    String code;
 
-public enum Role {
-    SUPER_ADMIN(1),
-    ADMIN(2),
-    EDITOR(3),
-    SCHEDULER(4),
-    END_USER(5);
-
-    private final int value;
-    private static final Map<Integer, Role> roleMap = new HashMap<>();
-
-    Role(int value) {
-        this.value = value;
+    public Role(AvailableRoles role) {
+        this.id = role.getId();
+        this.code = role.name();
     }
 
-    static {
-        for (Role role : Role.values()) {
-            roleMap.put(role.value, role);
-        }
+    public Role() {
     }
-
-    public static Optional<Role> valueOf(int statusId) {
-        return Optional.ofNullable(roleMap.get(statusId));
-    }
-
-    public int getValue() {
-        return value;
-    }
-
 }

@@ -1,13 +1,11 @@
 package com.whackdackery.openrota.app.user.service;
 
 import com.whackdackery.openrota.app.user.domain.User;
-import com.whackdackery.openrota.app.user.domain.UserWithRoles;
+import com.whackdackery.openrota.app.user.domain.dto.UserUpdateDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,6 +17,7 @@ public class UserController {
 
     private final UserService service;
 
+    @Autowired
     public UserController(UserService service) {
         this.service = service;
     }
@@ -30,9 +29,15 @@ public class UserController {
     }
 
     @GetMapping(path = "/{userId}")
-    public ResponseEntity<UserWithRoles> getUserWithRoles(@PathVariable int userId) {
-        UserWithRoles user = service.getUserWithRoles(userId);
+    public ResponseEntity<User> getUser(@PathVariable int userId) {
+        var user = service.getUserById(userId);
         return ResponseEntity.ok(user);
+    }
+
+    @PostMapping
+    public ResponseEntity<Integer> createUser(@RequestBody UserUpdateDto userUpdateDto) {
+        var createdUserId = service.createUser(userUpdateDto);
+        return ResponseEntity.status(207).body(createdUserId);
     }
 
 }

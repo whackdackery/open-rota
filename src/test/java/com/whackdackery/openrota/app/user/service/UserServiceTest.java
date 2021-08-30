@@ -47,8 +47,15 @@ class UserServiceTest {
     }
 
     @Test
-    void getAllUsersReturnsNoUsers() {
+    void getAllUsersReturnsNullUsers() {
         when(userDao.getAllUsers()).thenReturn(null);
+
+        assertThatThrownBy(() -> service.getAllUsers()).isInstanceOf(EntityNotFoundException.class);
+    }
+
+    @Test
+    void getAllUsersReturnsNoUsers() {
+        when(userDao.getAllUsers()).thenReturn(Collections.emptyList());
 
         assertThatThrownBy(() -> service.getAllUsers()).isInstanceOf(EntityNotFoundException.class);
     }
